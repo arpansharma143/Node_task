@@ -1,0 +1,15 @@
+{
+  "name": "arpan_sharma",
+  "version": "1.0.0",
+  "description": "to practice scripting ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "nodemonwithscript": "nodemon index.js"
+  },
+  "author": "arpan_sharma",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
