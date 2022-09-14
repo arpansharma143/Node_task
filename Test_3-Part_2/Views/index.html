@@ -100,8 +100,6 @@
         const file = document.getElementById("file");
         const button = document.getElementById("button");
 
-        console.log(age.value);
-
         let fd = new FormData();
 
         fd.append("firstName", firstName.value);
@@ -119,7 +117,7 @@
 
         const data = await res.json();
         console.log(data);
-        alert(data.msg)
+        alert(data.msg);
       });
     </script>
   </body>
