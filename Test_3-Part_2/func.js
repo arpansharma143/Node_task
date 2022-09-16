@@ -7,9 +7,9 @@ export const duplicate = async (email) => {
 
   const database = client.db("Node_test_3");
 
-  const movies = database.collection("users");
+  const users = database.collection("users");
 
-  let isExist = await movies.findOne({ eMail: email });
+  let isExist = await users.findOne({ eMail: email });
 
   console.log(isExist, "in91");
   return isExist;
@@ -33,5 +33,3 @@ export function allLetter(inputtxt) {
     return false;
   }
 }
-
-
