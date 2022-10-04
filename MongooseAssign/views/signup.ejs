@@ -1,0 +1,67 @@
+<%- include('partials/header'); -%>
+
+<form class="form">
+  <h2>signup</h2>
+  <label for="firstName">First Name</label>
+  <input type="text" name="firstName" required />
+  <div class="firstName error"></div>
+  <label for="lastName">Last Name</label>
+  <input type="text" name="lastName" required />
+  <div class="lastName error"></div>
+  <label for="email">emial</label>
+  <input type="text" name="email" required />
+  <div class="email error"></div>
+  <label for="password">password</label>
+  <input type="password" name="password" required />
+  <div class="password error"></div>
+  <input id="file" type="file" name="image1" required />
+  <button>sign up</button>
+</form>
+
+<script>
+  const form = document.querySelector("form");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = form.email.value;
+    const password = form.password.value;
+    const firstName = form.firstName.value;
+    const lastName = form.lastName.value;
+    const file = document.getElementById("file");
+
+    const fd = new FormData();
+
+    fd.append("lastName", lastName);
+    fd.append("firstName", firstName);
+    fd.append("email", email);
+    fd.append("password", password);
+    fd.append("image1", file.files[0]);
+
+    const errorEmail = document.querySelector(".email.error");
+    const errorPassword = document.querySelector(".password.error");
+
+    // errorEmail.textContent = "";
+    // errorPassword.textContent = "";
+
+    try {
+      const res = await fetch("/signup", {
+        method: "POST",
+        body: fd,
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (data.errors) {
+        errorEmail.textContent = data.errors.email;
+        errorPassword.textContent = data.errors.password;
+      }
+      if (data.user) {
+        location.assign("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+</script>

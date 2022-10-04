@@ -1,0 +1,70 @@
+<%- include('partials/header'); -%>
+
+<header>
+  <div class="profile_img">
+    <% if (user) { %>
+
+    <img src="/uploads/<%= user.filename %>" alt="" id="image" />
+
+    <% } else { %>
+    <img
+      id="image"
+      src="/360_F_188364539_a9ymnQnUOIvio7pisoYdaX9yQTdZBuCb.jpg"
+    />
+    <% } %>
+  </div>
+
+  <form>
+    <input
+      id="file"
+      type="file"
+      name="image"
+      required
+      onchange="showPreview(event);"
+    />
+    <% if (user) { %>
+
+    <button type="submit" class="btn">uplaod</button>
+    <% } else { %>
+    <h3>
+      you are not logged in please log in frist then you can upload a picture
+    </h3>
+    <button type="button" class="btn"><a href="/login">login</a></button>
+    <% } %>
+  </form>
+</header>
+
+<script>
+  const showPreview = (e) => {
+    if (event.target.files.length > 0) {
+      console.log(event.target.files[0]);
+      var src = URL.createObjectURL(event.target.files[0]);
+      var img = document.getElementById("image");
+      console.log(img);
+      img.src = src;
+    }
+  };
+
+  const from = document.querySelector("form");
+
+  from.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const file = document.querySelector("#file");
+
+    const fd = new FormData();
+
+    fd.append("image", file.files[0]);
+
+    const res = await fetch("/upload", {
+      method: "POST",
+      body: fd,
+    });
+
+    const data = await res.json();
+
+    if (data.msg) {
+      alert(data.msg);
+    }
+  });
+</script>
